@@ -1,205 +1,499 @@
-const tournaments = [
+// ==========================================
+// RIVO ESPORTS - app.js
+// ==========================================
+
+// بيانات RIVO التجريبية
+const البطولات = [
   {
-    game: "PUBG Mobile",
-    title: "RIVO PUBG — الموسم الأول",
-    desc: "بطولة فرق بنظام المراحل: تصفيات، نصف نهائي، نهائي.",
-    meta: ["👥 فرق", "🏆 مراحل", "🎯 موسم 01"]
+    لعبة: "ببجي موبايل",
+    عنوان: "RIVO PUBG - الموسم الأول",
+    وصف: "تصفيات، نصف النهائي، النهائي",
+    ميتا: ["🏆 01 موسم", "👥 100 لاعب", "🔥 مفتوحة"]
   },
   {
-    game: "eFootball",
-    title: "RIVO eFootball Cup",
-    desc: "بطولة فردية بنظام 1 ضد 1 لأفضل لاعبي eFootball.",
-    meta: ["👤 فردي", "⚽ 1 ضد 1", "🏆 موسم 01"]
+    لعبة: "كرة القدم الإلكترونية",
+    عنوان: "كأس RIVO لكرة القدم الإلكترونية",
+    وصف: "بطولة فردية لأفضل لاعبي eFootball",
+    ميتا: ["🏆 موسم 01", "⚽ 1 ضد 1", "👤 لاعب"]
   },
   {
-    game: "PUBG Mobile",
-    title: "RIVO Squad Open",
-    desc: "بطولة متعددة المباريات مع تجميع النقاط.",
-    meta: ["👥 4 لاعبين", "🔥 عدة مباريات", "📅 قريبًا"]
+    لعبة: "ببجي موبايل",
+    عنوان: "RIVO Squad Open",
+    وصف: "بطولة متعددة الفرق مع تجميع النقاط",
+    ميتا: ["👥 4 لاعبين", "🔥 المزيد من القصص", "📅 17"]
   }
 ];
 
-const challenges = [
+const التحديات = [
   {
-    title: "تحدي 15 Kills",
-    game: "PUBG Mobile",
-    desc: "حقق 15 إقصاءً في مباراة واحدة وأثبت مهارتك.",
-    pts: "+150 نقطة تحديات"
+    عنوان: "تحدي 15 قتلاً",
+    لعبة: "ببجي موبايل",
+    وصف: "إقصاء 15 لاعباً في مباراة واحدة وإثبات مهارتك.",
+    نقاط: "150+ نقطة"
   },
   {
-    title: "سلسلة الفوز",
-    game: "eFootball",
-    desc: "حقق 5 انتصارات متتالية في مواجهات 1 ضد 1.",
-    pts: "+200 نقطة تحديات"
+    عنوان: "سلسلة الانتصارات",
+    لعبة: "eFootball",
+    وصف: "حقق 5 انتصارات متتالية.",
+    نقاط: "200 نقطة"
   },
   {
-    title: "التحدي الأسبوعي",
-    game: "PUBG Mobile",
-    desc: "مهمة أسبوعية جديدة تتغير مع كل أسبوع.",
-    pts: "+100 نقطة تحديات"
+    عنوان: "تحدي الفريق",
+    لعبة: "ببجي موبايل",
+    وصف: "حقق أفضل نتيجة جماعية مع فريقك.",
+    نقاط: "250 نقطة"
   }
 ];
 
-const players = [
-  ["01", "مصطفى", "PUBG Mobile", "2450", "Diamond II"],
-  ["02", "أحمد", "eFootball", "2180", "Diamond I"],
-  ["03", "علي", "PUBG Mobile", "1940", "Platinum II"],
-  ["04", "حسين", "eFootball", "1760", "Platinum I"],
-  ["05", "سيف", "PUBG Mobile", "1510", "Gold II"]
+const اللاعبين = [
+  {
+    الاسم: "Mustafa",
+    اللعبة: "PUBG Mobile",
+    النقاط: 1250,
+    الرتبة: "Champion"
+  },
+  {
+    الاسم: "RIVO Player",
+    اللعبة: "PUBG Mobile",
+    النقاط: 980,
+    الرتبة: "Diamond"
+  },
+  {
+    الاسم: "eFootball Star",
+    اللعبة: "eFootball",
+    النقاط: 870,
+    الرتبة: "Platinum"
+  }
 ];
 
-const teams = [
-  ["RIVO FORCE", "2450", "#1", "28/30"],
-  ["RED WOLVES", "2210", "#2", "24/30"],
-  ["NOVA SQUAD", "1980", "#3", "19/30"]
+const الفرق = [
+  {
+    الاسم: "RIVO Elite",
+    اللعبة: "PUBG Mobile",
+    النقاط: 2400,
+    الأعضاء: 4
+  },
+  {
+    الاسم: "RIVO Warriors",
+    اللعبة: "PUBG Mobile",
+    النقاط: 1980,
+    الأعضاء: 4
+  },
+  {
+    الاسم: "RIVO Football",
+    اللعبة: "eFootball",
+    النقاط: 1750,
+    الأعضاء: 3
+  }
 ];
 
-function render() {
-  document.getElementById("tournamentList").innerHTML =
-    tournaments.map(x => `
-      <article class="card">
-        <div class="card-top">
-          <span class="game">${x.game}</span>
-          <span class="pill">مفتوحة</span>
-        </div>
 
-        <h3>${x.title}</h3>
-        <p>${x.desc}</p>
+// ==========================================
+// القائمة الرئيسية في الهاتف
+// ==========================================
 
-        <div class="meta">
-          ${x.meta.map(m => `<span>${m}</span>`).join("")}
-        </div>
+function toggleNav() {
+  const nav = document.getElementById("nav");
 
-        <button class="btn primary"
-          onclick="alert('التسجيل سيكون متاحًا بعد ربط قاعدة البيانات.')">
-          عرض البطولة
-        </button>
-      </article>
-    `).join("");
+  if (!nav) return;
 
-  document.getElementById("challengeList").innerHTML =
-    challenges.map(x => `
-      <article class="card">
-        <div class="card-top">
-          <span class="game">${x.game}</span>
-          <span class="pill red">تحدي</span>
-        </div>
-
-        <h3>${x.title}</h3>
-        <p>${x.desc}</p>
-
-        <div class="meta">
-          <span>⚔️ ${x.pts}</span>
-        </div>
-
-        <button class="btn ghost"
-          onclick="alert('التحديات ستصبح تفاعلية في المرحلة التالية.')">
-          عرض التحدي
-        </button>
-      </article>
-    `).join("");
-
-  document.getElementById("teamList").innerHTML =
-    teams.map(x => `
-      <article class="card">
-        <div class="card-top">
-          <h3>${x[0]}</h3>
-          <span class="rank">${x[2]}</span>
-        </div>
-
-        <p>فريق تنافسي في RIVO</p>
-
-        <div class="meta">
-          <span>🏆 ${x[1]} نقطة</span>
-          <span>👥 ${x[3]} عضو</span>
-        </div>
-
-        <button class="btn ghost">صفحة الفريق</button>
-      </article>
-    `).join("");
-
-  document.getElementById("playerList").innerHTML =
-    players.slice(0, 4).map(x => `
-      <article class="card">
-        <div class="card-top">
-          <h3>${x[1]}</h3>
-          <span class="rank">#${x[0]}</span>
-        </div>
-
-        <p>${x[2]}</p>
-
-        <div class="meta">
-          <span>🏆 ${x[3]} نقطة</span>
-          <span>🏅 ${x[4]}</span>
-        </div>
-      </article>
-    `).join("");
-
-  showRanking("players", document.querySelector(".tab"));
+  nav.classList.toggle("open");
 }
 
-function showRanking(type, el) {
 
-  document.querySelectorAll(".tab")
-    .forEach(x => x.classList.remove("active"));
+// ==========================================
+// عرض البطولات
+// ==========================================
 
-  if (el) {
-    el.classList.add("active");
+function renderTournaments() {
+  const container = document.getElementById("tournamentList");
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  البطولات.forEach((item) => {
+    const card = document.createElement("article");
+
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="card-top">
+        <span class="game-tag">${item.لعبة}</span>
+        <span class="status">مفتوحة</span>
+      </div>
+
+      <h3>${item.عنوان}</h3>
+
+      <p>${item.وصف}</p>
+
+      <div class="meta">
+        ${item.ميتا.map(x => `<span>${x}</span>`).join("")}
+      </div>
+
+      <button class="btn primary full"
+        onclick="joinTournament('${item.عنوان}')">
+        المشاركة
+      </button>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+
+// ==========================================
+// عرض التحديات
+// ==========================================
+
+function renderChallenges() {
+  const container = document.getElementById("challengeList");
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  التحديات.forEach((item) => {
+    const card = document.createElement("article");
+
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="card-top">
+        <span class="game-tag">${item.لعبة}</span>
+        <span class="points">${item.نقاط}</span>
+      </div>
+
+      <h3>${item.عنوان}</h3>
+
+      <p>${item.وصف}</p>
+
+      <button class="btn ghost full"
+        onclick="joinChallenge('${item.عنوان}')">
+        دخول التحدي
+      </button>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+
+// ==========================================
+// عرض اللاعبين
+// ==========================================
+
+function renderPlayers() {
+  const container = document.getElementById("playerList");
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  اللاعبين.forEach((player) => {
+    const card = document.createElement("article");
+
+    card.className = "card player-card";
+
+    card.innerHTML = `
+      <div class="avatar">
+        ${player.الاسم.charAt(0).toUpperCase()}
+      </div>
+
+      <h3>${player.الاسم}</h3>
+
+      <p>${player.اللعبة}</p>
+
+      <div class="player-score">
+        <strong>${player.النقاط}</strong>
+        <span>نقطة</span>
+      </div>
+
+      <span class="rank">${player.الرتبة}</span>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+
+// ==========================================
+// عرض الفرق
+// ==========================================
+
+function renderTeams() {
+  const container = document.getElementById("teamList");
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  الفرق.forEach((team) => {
+    const card = document.createElement("article");
+
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="team-icon">R</div>
+
+      <h3>${team.الاسم}</h3>
+
+      <p>${team.اللعبة}</p>
+
+      <div class="meta">
+        <span>👥 ${team.الأعضاء} أعضاء</span>
+        <span>🏆 ${team.النقاط} نقطة</span>
+      </div>
+
+      <button class="btn ghost full"
+        onclick="viewTeam('${team.الاسم}')">
+        عرض الفريق
+      </button>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+
+// ==========================================
+// جدول التصنيف
+// ==========================================
+
+function showRanking(type, button) {
+
+  document.querySelectorAll(".tab").forEach((tab) => {
+    tab.classList.remove("active");
+  });
+
+  if (button) {
+    button.classList.add("active");
   }
 
-  let rows;
+  const body = document.getElementById("rankingBody");
+
+  if (!body) return;
+
+  body.innerHTML = "";
+
+  let data = [];
 
   if (type === "players") {
 
-    rows = players.map(x => [
-      x[0],
-      x[1],
-      x[2],
-      x[3],
-      x[4]
-    ]);
+    data = اللاعبين.map((player) => ({
+      name: player.الاسم,
+      game: player.اللعبة,
+      points: player.النقاط,
+      rank: player.الرتبة
+    }));
 
   } else if (type === "teams") {
 
-    rows = teams.map(x => [
-      x[2],
-      x[0],
-      "PUBG Mobile",
-      x[1],
-      "ترتيب فريق"
-    ]);
+    data = الفرق.map((team) => ({
+      name: team.الاسم,
+      game: team.اللعبة,
+      points: team.النقاط,
+      rank: getRank(team.النقاط)
+    }));
 
   } else {
 
-    rows = [
-      ["01", "مصطفى", "PUBG Mobile", "1350", "تحديات"],
-      ["02", "علي", "PUBG Mobile", "1220", "تحديات"],
-      ["03", "أحمد", "eFootball", "980", "تحديات"]
-    ];
+    data = التحديات.map((challenge, index) => ({
+      name: challenge.عنوان,
+      game: challenge.لعبة,
+      points: (index + 1) * 100,
+      rank: "Challenge"
+    }));
+
   }
 
-  document.getElementById("rankingBody").innerHTML =
-    rows.map(r => `
-      <tr>
-        <td class="rank">${r[0]}</td>
-        <td>${r[1]}</td>
-        <td>${r[2]}</td>
-        <td>${r[3]}</td>
-        <td>${r[4]}</td>
-      </tr>
-    `).join("");
+  data.sort((a, b) => b.points - a.points);
+
+  data.forEach((item, index) => {
+
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${index + 1}</td>
+      <td>${item.name}</td>
+      <td>${item.game}</td>
+      <td><strong>${item.points}</strong></td>
+      <td><span class="rank">${item.rank}</span></td>
+    `;
+
+    body.appendChild(row);
+  });
 }
 
-function toggleNav() {
-  document.getElementById("nav").classList.toggle("open");
+
+// ==========================================
+// نظام الرتب
+// ==========================================
+
+function getRank(points) {
+
+  if (points >= 2500) return "Champion";
+  if (points >= 2000) return "Master";
+  if (points >= 1600) return "Diamond";
+  if (points >= 1200) return "Platinum";
+  if (points >= 800) return "Gold";
+  if (points >= 400) return "Silver";
+
+  return "Bronze";
 }
 
-function createAccount(e) {
 
-  e.preventDefault();
+// ==========================================
+// إنشاء الحساب
+// ==========================================
 
-  const name =
-    document.getElementById("name").value;
+function createAccount(event) {
 
-  const game =
-   
+  event.preventDefault();
+
+  const nameInput = document.getElementById("name");
+  const gameInput = document.getElementById("game");
+  const result = document.getElementById("accountResult");
+
+  if (!nameInput || !gameInput || !result) return;
+
+  const name = nameInput.value.trim();
+  const game = gameInput.value;
+
+  if (!name) return;
+
+  const account = {
+    name,
+    game,
+    points: 0,
+    rank: "Bronze",
+    createdAt: new Date().toISOString()
+  };
+
+  localStorage.setItem(
+    "rivo_account",
+    JSON.stringify(account)
+  );
+
+  result.innerHTML = `
+    <div class="success-box">
+      <strong>تم إنشاء حسابك بنجاح 🎉</strong>
+      <p>مرحباً ${name} في RIVO.</p>
+      <span>${game} · Bronze · 0 نقطة</span>
+    </div>
+  `;
+}
+
+
+// ==========================================
+// تحميل الحساب المحفوظ
+// ==========================================
+
+function loadAccount() {
+
+  const saved = localStorage.getItem("rivo_account");
+
+  if (!saved) return;
+
+  try {
+
+    const account = JSON.parse(saved);
+
+    const result = document.getElementById("accountResult");
+
+    if (!result) return;
+
+    result.innerHTML = `
+      <div class="success-box">
+        <strong>مرحباً بعودتك ${account.name} 👋</strong>
+        <p>${account.game}</p>
+        <span>
+          ${account.rank} · ${account.points} نقطة
+        </span>
+      </div>
+    `;
+
+  } catch (error) {
+
+    console.error("RIVO account error:", error);
+
+  }
+}
+
+
+// ==========================================
+// أزرار البطولات
+// ==========================================
+
+function joinTournament(name) {
+
+  alert(
+    `🏆 ${name}\n\nسيتم فتح التسجيل في هذه البطولة قريباً.`
+  );
+}
+
+
+// ==========================================
+// أزرار التحديات
+// ==========================================
+
+function joinChallenge(name) {
+
+  alert(
+    `🎯 ${name}\n\nسيتم تسجيل مشاركتك في التحدي قريباً.`
+  );
+}
+
+
+// ==========================================
+// الفرق
+// ==========================================
+
+function viewTeam(name) {
+
+  alert(
+    `👥 فريق ${name}\n\nصفحة الفريق ستكون متاحة في النسخة القادمة.`
+  );
+}
+
+
+// ==========================================
+// إغلاق القائمة عند اختيار رابط
+// ==========================================
+
+document.querySelectorAll("#nav a").forEach((link) => {
+
+  link.addEventListener("click", () => {
+
+    const nav = document.getElementById("nav");
+
+    if (nav) {
+      nav.classList.remove("open");
+    }
+
+  });
+
+});
+
+
+// ==========================================
+// تشغيل RIVO
+// ==========================================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  renderTournaments();
+
+  renderChallenges();
+
+  renderPlayers();
+
+  renderTeams();
+
+  showRanking("players", document.querySelector(".tab"));
+
+  loadAccount();
+
+  console.log("RIVO ESPORTS is running 🚀");
+
+});
